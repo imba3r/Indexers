@@ -1,14 +1,14 @@
 ﻿---
-id: nzbgeek-yml
-name: NZBgeek
-description: ""
+id: newz69-yml
+name: Newz69
+description: "'Newz69 is a PRIVATE Newznab Usenet Indexer'"
 language: en-US
 type: private
 allowdownloadredirect: true
 protocol: usenet
 encoding: UTF-8
 links:
-- https://api.nzbgeek.info/
+- https://newz69.keagaming.com/
 caps:
   categorymappings:
   - { id: 1000, cat: Console, desc: 'Console' }
@@ -23,7 +23,6 @@ caps:
   - { id: 1080, cat: Console/PS3, desc: 'Console/PS3' }
   - { id: 1090, cat: Console/XBox One, desc: 'Console/Xbox One' }
   - { id: 1100, cat: Console/PS4, desc: 'Console/PS4' }
-  - { id: 1110, cat: Console/NSW, desc: 'Console/NSW' }
   - { id: 2000, cat: Movies, desc: 'Movies' }
   - { id: 2010, cat: Movies/Foreign, desc: 'Movies/Foreign' }
   - { id: 2020, cat: Movies/Other, desc: 'Movies/Other' }
@@ -38,7 +37,6 @@ caps:
   - { id: 3030, cat: Audio/Audiobook, desc: 'Audio/Audiobook' }
   - { id: 3040, cat: Audio/Lossless, desc: 'Audio/Lossless' }
   - { id: 4000, cat: PC, desc: 'PC' }
-  - { id: 4010, cat: PC/0day, desc: 'PC/0day' }
   - { id: 4020, cat: PC/ISO, desc: 'PC/ISO' }
   - { id: 4030, cat: PC/Mac, desc: 'PC/Mac' }
   - { id: 4040, cat: PC/Mobile-Other, desc: 'PC/Mobile-Other' }
@@ -66,13 +64,13 @@ caps:
   - { id: 7010, cat: Books/Mags, desc: 'Books/Mags' }
   - { id: 7020, cat: Books/EBook, desc: 'Books/Ebook' }
   - { id: 7030, cat: Books/Comics, desc: 'Books/Comics' }
-  - { id: 8000, cat: Other, desc: 'Other' }
-  - { id: 8010, cat: Other/Misc, desc: 'Other/Misc' }
+  - { id: 7040, cat: Books/Anime, desc: 'Books/Anime' }
+  - { id: 8000, cat: Misc, desc: 'Misc' }
+  - { id: 8010, cat: Misc/Other, desc: 'Misc/Other' }
   modes:
-    search: [q,group]
-    tv-search: [q,rid,tvdbid,season,ep]
+    search: [q]
+    tv-search: [q,rid,tvdbid,tvmazeid,season,ep]
     movie-search: [q,imdbid,genre]
-    audio-search: [q]
 settings:
 - name: apikey
   type: text
@@ -95,11 +93,11 @@ search:
     q: '{{ .Keywords }}'
     ep: '{{ .Query.Ep}}'
     genre: '{{ .Query.Genre}}'
-    group: '{{ .Query.group}}'
     imdbid: '{{ .Query.IMDBIDShort}}'
     rid: '{{ .Query.TVRageID}}'
     season: '{{ .Query.Season}}'
     tvdbid: '{{ .Query.TVDBID}}'
+    tvmazeid: '{{ .Query.TVMazeID}}'
     cat: '{{ join .Categories \", \" }}'
     raw: '&extended=1'
   rows:

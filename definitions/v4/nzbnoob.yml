@@ -1,14 +1,14 @@
 ﻿---
-id: nzbgeek-yml
-name: NZBgeek
-description: ""
+id: nzbnoob-yml
+name: NzbNoob
+description: "'NzbNoob is a PRIVATE Newznab Usenet Indexer'"
 language: en-US
 type: private
 allowdownloadredirect: true
 protocol: usenet
 encoding: UTF-8
 links:
-- https://api.nzbgeek.info/
+- https://www.nzbnoob.com/
 caps:
   categorymappings:
   - { id: 1000, cat: Console, desc: 'Console' }
@@ -23,7 +23,6 @@ caps:
   - { id: 1080, cat: Console/PS3, desc: 'Console/PS3' }
   - { id: 1090, cat: Console/XBox One, desc: 'Console/Xbox One' }
   - { id: 1100, cat: Console/PS4, desc: 'Console/PS4' }
-  - { id: 1110, cat: Console/NSW, desc: 'Console/NSW' }
   - { id: 2000, cat: Movies, desc: 'Movies' }
   - { id: 2010, cat: Movies/Foreign, desc: 'Movies/Foreign' }
   - { id: 2020, cat: Movies/Other, desc: 'Movies/Other' }
@@ -45,6 +44,7 @@ caps:
   - { id: 4050, cat: PC/Games, desc: 'PC/Games' }
   - { id: 4060, cat: PC/Mobile-iOS, desc: 'PC/Mobile-iOS' }
   - { id: 4070, cat: PC/Mobile-Android, desc: 'PC/Mobile-Android' }
+  - { id: 4090, cat: PC/Bookware, desc: 'PC/Bookware' }
   - { id: 5000, cat: TV, desc: 'TV' }
   - { id: 5020, cat: TV/Foreign, desc: 'TV/Foreign' }
   - { id: 5030, cat: TV/SD, desc: 'TV/SD' }
@@ -59,6 +59,7 @@ caps:
   - { id: 6020, cat: XXX/WMV, desc: 'XXX/WMV' }
   - { id: 6030, cat: XXX/XviD, desc: 'XXX/XviD' }
   - { id: 6040, cat: XXX/x264, desc: 'XXX/x264' }
+  - { id: 6045, cat: XXX/UHD, desc: 'XXX/UHD' }
   - { id: 6050, cat: XXX/Pack, desc: 'XXX/Pack' }
   - { id: 6060, cat: XXX/ImgSet, desc: 'XXX/ImgSet' }
   - { id: 6070, cat: XXX/Other, desc: 'XXX/Other' }
@@ -68,11 +69,11 @@ caps:
   - { id: 7030, cat: Books/Comics, desc: 'Books/Comics' }
   - { id: 8000, cat: Other, desc: 'Other' }
   - { id: 8010, cat: Other/Misc, desc: 'Other/Misc' }
+  - { id: 8080, cat: Other/Obfuscated, desc: 'Other/Obfuscated' }
   modes:
-    search: [q,group]
-    tv-search: [q,rid,tvdbid,season,ep]
+    search: [q]
+    tv-search: [q,rid,tvdbid,tvmazeid,season,ep]
     movie-search: [q,imdbid,genre]
-    audio-search: [q]
 settings:
 - name: apikey
   type: text
@@ -95,11 +96,11 @@ search:
     q: '{{ .Keywords }}'
     ep: '{{ .Query.Ep}}'
     genre: '{{ .Query.Genre}}'
-    group: '{{ .Query.group}}'
     imdbid: '{{ .Query.IMDBIDShort}}'
     rid: '{{ .Query.TVRageID}}'
     season: '{{ .Query.Season}}'
     tvdbid: '{{ .Query.TVDBID}}'
+    tvmazeid: '{{ .Query.TVMazeID}}'
     cat: '{{ join .Categories \", \" }}'
     raw: '&extended=1'
   rows:

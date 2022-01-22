@@ -1,6 +1,6 @@
 ﻿---
-id: nzbgeek-yml
-name: NZBgeek
+id: newz-complex-yml
+name: Newz-Complex
 description: ""
 language: en-US
 type: private
@@ -8,28 +8,31 @@ allowdownloadredirect: true
 protocol: usenet
 encoding: UTF-8
 links:
-- https://api.nzbgeek.info/
+- https://newz-complex.org/www/
 caps:
   categorymappings:
-  - { id: 1000, cat: Console, desc: 'Console' }
-  - { id: 1010, cat: Console/NDS, desc: 'Console/NDS' }
-  - { id: 1020, cat: Console/PSP, desc: 'Console/PSP' }
-  - { id: 1030, cat: Console/Wii, desc: 'Console/Wii' }
-  - { id: 1035, cat: Console/Switch, desc: 'Console/Switch' }
-  - { id: 1040, cat: Console/XBox, desc: 'Console/Xbox' }
-  - { id: 1050, cat: Console/XBox 360, desc: 'Console/Xbox 360' }
-  - { id: 1060, cat: Console/Wiiware, desc: 'Console/WiiWare/VC' }
-  - { id: 1070, cat: Console/XBox 360 DLC, desc: 'Console/XBOX 360 DLC' }
-  - { id: 1080, cat: Console/PS3, desc: 'Console/PS3' }
-  - { id: 1090, cat: Console/XBox One, desc: 'Console/Xbox One' }
-  - { id: 1100, cat: Console/PS4, desc: 'Console/PS4' }
-  - { id: 1110, cat: Console/NSW, desc: 'Console/NSW' }
+  - { id: 1000, cat: Spiele, desc: 'Spiele' }
+  - { id: 100003, cat: Spiele/PS2, desc: 'Spiele/PS2' }
+  - { id: 100005, cat: Spiele/3DS, desc: 'Spiele/3DS' }
+  - { id: 100006, cat: Spiele/PS1, desc: 'Spiele/PS1' }
+  - { id: 100007, cat: Spiele/NSwitch, desc: 'Spiele/NSwitch' }
+  - { id: 1010, cat: Spiele/NDS, desc: 'Spiele/NDS' }
+  - { id: 1011, cat: Spiele/PC, desc: 'Spiele/PC' }
+  - { id: 1020, cat: Spiele/PSP, desc: 'Spiele/PSP' }
+  - { id: 1021, cat: Spiele/PSVita, desc: 'Spiele/PSVita' }
+  - { id: 1030, cat: Spiele/Wii, desc: 'Spiele/Wii' }
+  - { id: 1031, cat: Spiele/WiiU, desc: 'Spiele/WiiU' }
+  - { id: 1040, cat: Spiele/XBox, desc: 'Spiele/Xbox' }
+  - { id: 1050, cat: Spiele/XBox 360, desc: 'Spiele/Xbox 360' }
+  - { id: 1070, cat: Spiele/XBox 360 DLC, desc: 'Spiele/XBOX 360 DLC' }
+  - { id: 1080, cat: Spiele/PS3, desc: 'Spiele/PS3' }
+  - { id: 1081, cat: Spiele/PS4, desc: 'Spiele/PS4' }
   - { id: 2000, cat: Movies, desc: 'Movies' }
-  - { id: 2010, cat: Movies/Foreign, desc: 'Movies/Foreign' }
   - { id: 2020, cat: Movies/Other, desc: 'Movies/Other' }
-  - { id: 2030, cat: Movies/SD, desc: 'Movies/SD' }
-  - { id: 2040, cat: Movies/HD, desc: 'Movies/HD' }
-  - { id: 2045, cat: Movies/UHD, desc: 'Movies/UHD' }
+  - { id: 2021, cat: Movies/1080P, desc: 'Movies/1080P' }
+  - { id: 2022, cat: Movies/720P, desc: 'Movies/720P' }
+  - { id: 2023, cat: Movies/SD, desc: 'Movies/SD' }
+  - { id: 2024, cat: Movies/2160P, desc: 'Movies/2160P' }
   - { id: 2050, cat: Movies/BluRay, desc: 'Movies/BluRay' }
   - { id: 2060, cat: Movies/3D, desc: 'Movies/3D' }
   - { id: 3000, cat: Audio, desc: 'Audio' }
@@ -39,6 +42,7 @@ caps:
   - { id: 3040, cat: Audio/Lossless, desc: 'Audio/Lossless' }
   - { id: 4000, cat: PC, desc: 'PC' }
   - { id: 4010, cat: PC/0day, desc: 'PC/0day' }
+  - { id: 4011, cat: PC/Software, desc: 'PC/Software' }
   - { id: 4020, cat: PC/ISO, desc: 'PC/ISO' }
   - { id: 4030, cat: PC/Mac, desc: 'PC/Mac' }
   - { id: 4040, cat: PC/Mobile-Other, desc: 'PC/Mobile-Other' }
@@ -46,22 +50,14 @@ caps:
   - { id: 4060, cat: PC/Mobile-iOS, desc: 'PC/Mobile-iOS' }
   - { id: 4070, cat: PC/Mobile-Android, desc: 'PC/Mobile-Android' }
   - { id: 5000, cat: TV, desc: 'TV' }
-  - { id: 5020, cat: TV/Foreign, desc: 'TV/Foreign' }
-  - { id: 5030, cat: TV/SD, desc: 'TV/SD' }
-  - { id: 5040, cat: TV/HD, desc: 'TV/HD' }
-  - { id: 5045, cat: TV/UHD, desc: 'TV/UHD' }
+  - { id: 5020, cat: TV/SD, desc: 'TV/SD' }
+  - { id: 5030, cat: TV/720p, desc: 'TV/720p' }
+  - { id: 5040, cat: TV/1080P, desc: 'TV/1080P' }
+  - { id: 5041, cat: TV/2160P, desc: 'TV/2160P' }
   - { id: 5050, cat: TV/Other, desc: 'TV/Other' }
   - { id: 5060, cat: TV/Sport, desc: 'TV/Sport' }
   - { id: 5070, cat: TV/Anime, desc: 'TV/Anime' }
-  - { id: 5080, cat: TV/Documentary, desc: 'TV/Documentary' }
-  - { id: 6000, cat: XXX, desc: 'XXX' }
-  - { id: 6010, cat: XXX/DVD, desc: 'XXX/DVD' }
-  - { id: 6020, cat: XXX/WMV, desc: 'XXX/WMV' }
-  - { id: 6030, cat: XXX/XviD, desc: 'XXX/XviD' }
-  - { id: 6040, cat: XXX/x264, desc: 'XXX/x264' }
-  - { id: 6050, cat: XXX/Pack, desc: 'XXX/Pack' }
-  - { id: 6060, cat: XXX/ImgSet, desc: 'XXX/ImgSet' }
-  - { id: 6070, cat: XXX/Other, desc: 'XXX/Other' }
+  - { id: 5080, cat: TV/Dokus, desc: 'TV/Dokus' }
   - { id: 7000, cat: Books, desc: 'Books' }
   - { id: 7010, cat: Books/Mags, desc: 'Books/Mags' }
   - { id: 7020, cat: Books/EBook, desc: 'Books/Ebook' }
@@ -69,10 +65,9 @@ caps:
   - { id: 8000, cat: Other, desc: 'Other' }
   - { id: 8010, cat: Other/Misc, desc: 'Other/Misc' }
   modes:
-    search: [q,group]
-    tv-search: [q,rid,tvdbid,season,ep]
+    search: [q]
+    tv-search: [q,rid,tvdbid,tvmazeid,season,ep]
     movie-search: [q,imdbid,genre]
-    audio-search: [q]
 settings:
 - name: apikey
   type: text
@@ -95,11 +90,11 @@ search:
     q: '{{ .Keywords }}'
     ep: '{{ .Query.Ep}}'
     genre: '{{ .Query.Genre}}'
-    group: '{{ .Query.group}}'
     imdbid: '{{ .Query.IMDBIDShort}}'
     rid: '{{ .Query.TVRageID}}'
     season: '{{ .Query.Season}}'
     tvdbid: '{{ .Query.TVDBID}}'
+    tvmazeid: '{{ .Query.TVMazeID}}'
     cat: '{{ join .Categories \", \" }}'
     raw: '&extended=1'
   rows:
