@@ -1,4 +1,4 @@
-﻿---
+---
 id: animetosho(usenet)-yml
 name: AnimeTosho (Usenet)
 description: "'AnimeTosho (Usenet) is a PUBLIC Newznab Usenet Indexer'"
@@ -11,7 +11,7 @@ links:
 - https://animetosho.org/
 caps:
   categorymappings:
-  - { id: 5070, cat: Anime, desc: 'Anime' }
+#  - { id: 5070, cat: Anime, desc: Anime }
   modes:
     search: [q]
     tv-search: [q]
