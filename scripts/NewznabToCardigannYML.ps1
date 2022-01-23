@@ -9,11 +9,11 @@
     .NOTES
         This script has been tested on Windows PowerShell 7.1.3
     .EXAMPLE
-    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "nzbplanet" -privacy "private" -apipath "/api" -outputfile "C:\Development\Code\Prowlarr_Indexers\definitions\v4\nzbplanet.yml" -language "en-US"
+    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "NzbPlanet" -privacy "private" -apipath "/api" -outputfile "C:\Development\Code\Prowlarr_Indexers\definitions\v4\nzbplanet.yml" -language "en-US"
     .EXAMPLE
-    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "nzbplanet" -privacy "public"
+    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "NzbPlanet" -privacy "public"
     .EXAMPLE
-    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "nzbplanet" -privacy "semi-private"
+    PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net -indexer "NzbPlanet" -privacy "semi-private"
     .EXAMPLE
     PS> .\NewznabToCardigannYML.ps1 -site https://nzbplanet.net
 #>
@@ -45,7 +45,7 @@ function Invoke-CatNameReplace
         [string]
         $Name
     )
-    return ($Name -replace 'xbox', 'XBox' -replace 'ebook', 'EBook' -replace 'XBox One', 'XBox One' -replace 'WiiWare/VC', 'Wiiware' -replace 'Pc', 'PC')
+    return ($Name -replace 'xbox', 'XBox' -replace 'ebook', 'EBook' -replace 'XBox One', 'XBox One' -replace 'WiiWare/VC', 'Wiiware' -replace 'Pc', 'PC' -replace "'", '')
 }
 
 function Invoke-ModesReplace
@@ -64,7 +64,7 @@ function Invoke-YMLReplace
         [string]
         $Name
     )
-    return ($Name -replace 'category2', 'category' -replace '"{ ', '{ ' -replace ' }"', ' }')
+    return ($Name -replace 'category2', 'category' -replace '"{ ', '{ ' -replace ' }"', ' }' -replace "'{", '{' -replace "}'", '}' -replace '{{', "'{{" -replace '}}', "}}'")
 }
 # Get Data and digest objects
 Write-Information 'Requesting Caps'
@@ -85,40 +85,22 @@ Write-Information 'Got Caps'
 [string]$audio_search = "[$($rSearchCaps.'audio-search'.supportedParams -replace ', ',',')]"
 Write-Information 'Search Caps Built'
 # Get Categories: ID, MappedName, Name
-[System.Collections.Generic.List[System.Object]]$categories = @()
 Write-Information 'Building Categories'
+# TODO: Validate Categories List (Names) - use newznabcats.txt
+# None matching categories (case insensitive) will need to be commented out - fuzzy match if possible?
+[System.Collections.Generic.List[string]]$ymlCategories = @()
 foreach ($category in $rCategories)
 {
     $catName = Invoke-CatNameReplace -Name $category.name
-    $temp = [PSCustomObject][ordered]@{
-        id   = $category.id
-        cat  = $catName
-        desc = "'$($category.name)'"
-    }
-    $categories.Add($temp)
-    Write-Information 'Building Sub-Categories'
+    $ymlCategories.Add("{ id: $($category.id), cat: $($catName), desc: $($category.name) }")
+    Write-Information "Building Sub-Categories within $($category.id)"
     foreach ($subcategory in $category.subcat)
     {
         $subcatName = Invoke-CatNameReplace -Name "$($catName)/$($subcategory.name)"
-        $subtemp = [PSCustomObject][ordered]@{
-            id   = $subcategory.id
-            cat  = $subcatName
-            desc = "'$($catName)/$($subcategory.name)'"
-        }
-        $categories.Add($subtemp)
+        $ymlCategories.Add("{ id: $($subcategory.id), cat: $($subcatName), desc: $($catName)/$($subcategory.name -replace "'", '') }")
     }
 }
 Write-Information 'Categories Built'
-[System.Collections.Generic.List[string]]$ymlCategories = @()
-foreach ($category in ($categories | Sort-Object id))
-{
-    # TODO: This is currently causing the output to be a list of strings
-    $ymlCategories.Add("{ id: $($category.id), cat: $($category.cat), desc: $($category.desc) }")
-}
-# TODO: Validate Categories List (Names) - use newznabcats.txt
-# None matching categories (case insensitive) will need to be commented out - fuzzy match if possible?
-Write-Information 'Categories converted to YML'
-
 #TODO: This is currently creating strings for each mode and these shouldn't be strings
 $modes = [ordered]@{
     search = $q_search
