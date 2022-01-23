@@ -68,11 +68,12 @@ function Invoke-YMLReplace
 }
 # Get Data and digest objects
 Write-Information 'Requesting Caps'
-[xml]$xmlResponse = Invoke-RestMethod -Uri $capscall -ContentType 'application/xml' -Method Get -StatusCodeVariable "APIResponseCode"
+$response = Invoke-RestMethod -Uri $capscall -ContentType 'application/xml' -Method Get -StatusCodeVariable "APIResponseCode" -ErrorAction Stop
 if ($APIResponseCode -ne 200)
 {
     throw "The status code $APIResponseCode was received from the website, please investigate why and try again when issue is resolved"
 }
+$xmlResponse = [xml]$response
 $rSearchCaps = $xmlResponse.caps.searching
 $rCategories = $xmlResponse.caps.categories.category
 $rServer = $xmlResponse.caps.server
