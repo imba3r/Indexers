@@ -303,5 +303,31 @@ $ymlout += '
 # return $ymlout
 
 Write-Information 'Indexer YML Complete'
-$ymlout | Out-File $OutputFile -Encoding 'UTF-8'
+$ymlout | Out-File $OutputFile -Encoding utf8
+$categoryCsv = Import-Csv $($PSScriptRoot + [system.Io.Path]::DirectorySeparatorChar + 'newznabcats(v4.0).csv')
+[System.Collections.Generic.List[string]]$linesToReplace = @()
+$ymlout = Get-Content $OutputFile -Encoding utf8
+#Validating Category Names
+foreach ($line in ($ymlout| Select-String "{ id:" | Select-Object -ExpandProperty Line))
+{
+    foreach ($cleanLine in ($line -replace "- { ", "" -replace " }" -replace "id: ", "" -replace "cat: ").Trim())
+    {
+        $split = $cleanLine -split ", "
+        $categoryCsvCategory = ($categoryCsv | Where-Object {$_.id -eq $split[0]}).newznabcat
+        if ($categoryCsvCategory -ne $split[1])
+        {
+            $linesToReplace.Add($line)
+        }
+    }
+}
+$ymlReallyOut = $ymlout
+if ($linesToReplace.Count -gt 0)
+{
+    foreach ($lineToReplace in $linesToReplace)
+    {
+        $ymlReallyOut = $ymlReallyOut -replace $lineToReplace, "#$lineToReplace"
+    }
+}
+
+$ymlReallyOut | Out-File $OutputFile -Encoding utf8 -Force
 Write-Information 'Indexer YML Page Output - [$OutputFile]'
