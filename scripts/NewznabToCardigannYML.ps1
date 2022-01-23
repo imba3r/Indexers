@@ -89,12 +89,12 @@ Write-Information 'Building Categories'
 # TODO: Validate Categories List (Names) - use newznabcats.txt
 # None matching categories (case insensitive) will need to be commented out - fuzzy match if possible?
 [System.Collections.Generic.List[string]]$ymlCategories = @()
-foreach ($category in $rCategories)
+foreach ($category in ($rCategories | Sort-Object id))
 {
     $catName = Invoke-CatNameReplace -Name $category.name
     $ymlCategories.Add("{ id: $($category.id), cat: $($catName), desc: $($category.name) }")
     Write-Information "Building Sub-Categories within $($category.id)"
-    foreach ($subcategory in $category.subcat)
+    foreach ($subcategory in ($category.subcat | Sort-Object id))
     {
         $subcatName = Invoke-CatNameReplace -Name "$($catName)/$($subcategory.name)"
         $ymlCategories.Add("{ id: $($subcategory.id), cat: $($subcatName), desc: $($catName)/$($subcategory.name -replace "'", '') }")
