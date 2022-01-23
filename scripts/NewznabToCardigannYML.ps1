@@ -45,7 +45,7 @@ function Invoke-CatNameReplace
         [string]
         $Name
     )
-    return ($Name -replace 'xbox', 'XBox' -replace 'ebook', 'EBook' -replace 'XBox One', 'XBox One' -replace 'WiiWare/VC', 'Wiiware' -replace 'Pc', 'PC' -replace "'", '')
+    return ($Name -replace 'xbox', 'XBox' -replace 'ebook', 'EBook' -replace 'XBox One', 'XBox One' -replace 'WiiWare/VC', 'Wiiware' -replace 'Pc', 'PC' -replace "'", '' -replace '360 DLC', 'XBox360' -replace 'XBox 360', 'XBox360' -replace 'Movies/Non-English', 'Movies/Foreign' -replace 'TV/Non-English', 'TV/Foreign' -replace 'Spiele', 'Console' -replace 'Software', 'PC' -replace 'ImgSet', 'ImageSet' -replace 'XXX/SD' -replace ' Anime', ' TV/Anime' -replace 'WEBDL', 'WEB-DL ')
 }
 
 function Invoke-ModesReplace
@@ -68,7 +68,7 @@ function Invoke-YMLReplace
 }
 # Get Data and digest objects
 Write-Information 'Requesting Caps'
-$response = Invoke-RestMethod -Uri $capscall -ContentType 'application/xml' -Method Get -StatusCodeVariable "APIResponseCode" -ErrorAction Stop
+$response = Invoke-RestMethod -Uri $capscall -ContentType 'application/xml' -Method Get -StatusCodeVariable 'APIResponseCode' -ErrorAction Stop
 if ($APIResponseCode -ne 200)
 {
     throw "The status code $APIResponseCode was received from the website, please investigate why and try again when issue is resolved"
@@ -308,12 +308,12 @@ $categoryCsv = Import-Csv $($PSScriptRoot + [system.Io.Path]::DirectorySeparator
 [System.Collections.Generic.List[string]]$linesToReplace = @()
 $ymlout = Get-Content $OutputFile -Encoding utf8
 #Validating Category Names
-foreach ($line in ($ymlout| Select-String "{ id:" | Select-Object -ExpandProperty Line))
+foreach ($line in ($ymlout | Select-String '{ id:' | Select-Object -ExpandProperty Line))
 {
-    foreach ($cleanLine in ($line -replace "- { ", "" -replace " }" -replace "id: ", "" -replace "cat: ").Trim())
+    foreach ($cleanLine in ($line -replace '- { ', '' -replace ' }' -replace 'id: ', '' -replace 'cat: ').Trim())
     {
-        $split = $cleanLine -split ", "
-        $categoryCsvCategory = ($categoryCsv | Where-Object {$_.id -eq $split[0]}).newznabcat
+        $split = $cleanLine -split ', '
+        $categoryCsvCategory = ($categoryCsv | Where-Object { $_.id -eq $split[0] }).newznabcat
         if ($categoryCsvCategory -ne $split[1])
         {
             $linesToReplace.Add($line)
